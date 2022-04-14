@@ -1,6 +1,5 @@
 package com.bidder.BidderApp.Service;
 
-import com.bidder.BidderApp.Exception.UserNotFoundException;
 import com.bidder.BidderApp.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,8 @@ public class UserResource {
         User user = userService.findUserByUsername(username);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    //TODO check if the username exists
 
     @PostMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody User user){
