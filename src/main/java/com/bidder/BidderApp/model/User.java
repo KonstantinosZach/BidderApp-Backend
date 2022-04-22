@@ -35,7 +35,6 @@ public class User implements Serializable {
     @Column(nullable = false, length = 30)
     private String afm;
 
-
     private String imageUrl;
 
     public void setUsername(String username) {

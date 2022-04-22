@@ -36,10 +36,22 @@ public class UserResource {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<User> updateUser(@RequestBody User user){
-        User updateUser = userService.updateUser(user);
-        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    @PutMapping("/update/{username}")
+    public ResponseEntity<User> updateUser(@PathVariable("username") String username, @RequestBody User user){
+        User toBeUpdated = userService.findUserByUsername(username);
+
+        toBeUpdated.setFirstname(user.getFirstname());
+        toBeUpdated.setLastname(user.getLastname());
+        toBeUpdated.setAddress(user.getAddress());
+        toBeUpdated.setEmail(user.getEmail());
+        toBeUpdated.setPhone(user.getPhone());
+        toBeUpdated.setAfm(user.getAfm());
+        toBeUpdated.setImageUrl(user.getImageUrl());
+        toBeUpdated.setPassword(user.getPassword());
+        toBeUpdated.setPostNumber(user.getPostNumber());
+
+        User updatedUser = userService.updateUser(toBeUpdated);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @DeleteMapping ("/delete/{username}")
