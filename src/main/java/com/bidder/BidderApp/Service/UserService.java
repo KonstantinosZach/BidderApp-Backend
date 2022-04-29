@@ -1,5 +1,6 @@
 package com.bidder.BidderApp.Service;
 
+import com.bidder.BidderApp.Exception.UserAlreadyExists;
 import com.bidder.BidderApp.Exception.UserNotFoundException;
 import com.bidder.BidderApp.Repo.UserRepo;
 import com.bidder.BidderApp.model.User;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -19,10 +21,13 @@ public class UserService {
     }
 
     public User addUser(User user){
-        //user.setUsername(UUID.randomUUID().toString());
+        boolean userExists = userRepo.findUserByUsername(user.getUsername()).isPresent();
+        if(userExists)
+            throw new UserAlreadyExists("User with username:" + user.getUsername() + "already exists");
+
         return userRepo.save(user);
     }
-
+    
     public List<User> findAllUsers(){
         return userRepo.findAll();
     }
