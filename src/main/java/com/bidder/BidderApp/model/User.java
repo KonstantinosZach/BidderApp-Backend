@@ -35,6 +35,12 @@ public class User implements Serializable {
     @Column(nullable = false, length = 30)
     private String afm;
 
+    @Column(nullable = false)
+    private Boolean admin = false;
+
+    @Column(nullable = false)
+    private Boolean accepted = false;
+
     private String imageUrl;
 
     public void setUsername(String username) {
@@ -73,11 +79,17 @@ public class User implements Serializable {
         this.afm = afm;
     }
 
-
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
+    public void setAdmin(Boolean status) {
+        this.admin = status;
+    }
+
+    public void setAccepted(Boolean status) {
+        this.accepted = status;
+    }
 
     public String getUsername() {
         return username;
@@ -119,6 +131,14 @@ public class User implements Serializable {
         return imageUrl;
     }
 
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public Boolean getAccepted() {
+        return accepted;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -132,6 +152,8 @@ public class User implements Serializable {
                 ", postNumber='" + postNumber + '\'' +
                 ", afm='" + afm + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", admin=" + admin + '\'' +
+                ", accepted=" + accepted + '\'' +
                 '}';
     }
 }

@@ -28,12 +28,19 @@ public class UserResource {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    //TODO check if the username exists
-
     @PostMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody User user){
         User newUser = userService.addUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/accept/{username}")
+    public ResponseEntity<User> acceptUser(@PathVariable("username") String username){
+        User toBeAccepted = userService.findUserByUsername(username);
+        toBeAccepted.setAccepted(true);
+
+        User updatedUser = userService.updateUser(toBeAccepted);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @PutMapping("/update/{username}")
@@ -49,6 +56,7 @@ public class UserResource {
         toBeUpdated.setImageUrl(user.getImageUrl());
         toBeUpdated.setPassword(user.getPassword());
         toBeUpdated.setPostNumber(user.getPostNumber());
+        toBeUpdated.setAccepted(user.getAccepted());
 
         User updatedUser = userService.updateUser(toBeUpdated);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
