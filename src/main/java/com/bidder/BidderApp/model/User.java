@@ -1,8 +1,6 @@
 package com.bidder.BidderApp.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -42,6 +40,16 @@ public class User implements Serializable {
     private Boolean accepted = false;
 
     private String imageUrl;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "bidder_id")
+    private Bidder bidder = null;
+
+    public Bidder getBidder() { return bidder; }
+
+    public void setBidder(Bidder bidder) {
+        this.bidder = bidder;
+    }
 
     public void setUsername(String username) {
         this.username = username;
