@@ -1,9 +1,12 @@
 package com.bidder.BidderApp.model;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 
 @Entity
+@JsonSerialize
 public class Bidder implements Serializable {
 
     @Id

@@ -1,9 +1,13 @@
 package com.bidder.BidderApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@JsonSerialize
 public class User implements Serializable {
     @Id
     @Column(nullable = false, unique = true, length = 30)
@@ -43,6 +47,7 @@ public class User implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "bidder_id")
+    @JsonIgnore
     private Bidder bidder = null;
 
     public Bidder getBidder() { return bidder; }
@@ -147,21 +152,21 @@ public class User implements Serializable {
         return accepted;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                ", postNumber='" + postNumber + '\'' +
-                ", afm='" + afm + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", admin=" + admin + '\'' +
-                ", accepted=" + accepted + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "username='" + username + '\'' +
+//                ", password='" + password + '\'' +
+//                ", firstname='" + firstname + '\'' +
+//                ", lastname='" + lastname + '\'' +
+//                ", email='" + email + '\'' +
+//                ", phone='" + phone + '\'' +
+//                ", address='" + address + '\'' +
+//                ", postNumber='" + postNumber + '\'' +
+//                ", afm='" + afm + '\'' +
+//                ", imageUrl='" + imageUrl + '\'' +
+//                ", admin=" + admin + '\'' +
+//                ", accepted=" + accepted + '\'' +
+//                '}';
+//    }
 }

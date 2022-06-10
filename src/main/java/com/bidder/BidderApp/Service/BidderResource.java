@@ -44,4 +44,12 @@ public class BidderResource{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/find/{username}")
+    public ResponseEntity<Bidder> getUserByUsername (@PathVariable("username") String username) {
+        User user = userService.findUserByUsername(username);
+        Bidder bidder = user.getBidder();
+        return new ResponseEntity<>(bidder, HttpStatus.OK);
+    }
+
+
 }
