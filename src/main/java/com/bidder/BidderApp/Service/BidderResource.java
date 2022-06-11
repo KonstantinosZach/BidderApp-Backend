@@ -34,6 +34,9 @@ public class BidderResource{
 
     @DeleteMapping ("/delete/{username}")
     public ResponseEntity<?> deleteBidder(@PathVariable("username") String username){
+
+        //todo if bidder has alive bids cant delete acc
+
         Integer id = userService.findUserByUsername(username).getBidder().getId();
         bidderService.deleteBidder(id);
 

@@ -21,6 +21,10 @@ public class BidderService {
         bidderRepo.delete(findBidderById(id));
     }
 
+    public Bidder updateBidder(Bidder bidder){
+        return bidderRepo.save(bidder);
+    }
+
     public Bidder findBidderById(Integer id){
         return bidderRepo.findBidderById(id)
                 .orElseThrow(() -> new BidderNotFoundException("Bidder with id:"+ id +"was not found!"));

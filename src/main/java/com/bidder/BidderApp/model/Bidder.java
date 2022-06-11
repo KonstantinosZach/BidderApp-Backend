@@ -1,8 +1,11 @@
 package com.bidder.BidderApp.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -24,6 +27,17 @@ public class Bidder implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "bidder")
     private User user;
+
+    @OneToMany(mappedBy = "bidder")
+    private Set<Bid> bids = new HashSet<>();
+
+    public Set<Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(Set<Bid> bids) {
+        this.bids = bids;
+    }
 
     public int getId() {
         return id;
