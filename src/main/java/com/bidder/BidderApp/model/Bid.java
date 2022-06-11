@@ -18,6 +18,19 @@ public class Bid implements Serializable {
     @JoinColumn(name = "bidder_id", referencedColumnName = "id")
     private Bidder bidder;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    private Item item;
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     //todo make it Time type , now is string for testing
     @Column(nullable = false)
     private String time;
