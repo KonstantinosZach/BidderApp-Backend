@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BidderService {
-    private  final BidderRepo bidderRepo;
+    private final BidderRepo bidderRepo;
 
     @Autowired
     public BidderService(BidderRepo bidderRepo) { this.bidderRepo = bidderRepo; }

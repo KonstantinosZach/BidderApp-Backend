@@ -1,5 +1,6 @@
 package com.bidder.BidderApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
@@ -46,11 +47,19 @@ public class Item implements Serializable {
     @Column(nullable = false, length = 50)
     private String ends;
 
-    //todo
-    //here goes seller
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    private Seller seller;
 
     @Column(nullable = false)
     private String description;
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {this.seller = seller;}
 
     public String getCategory() {
         return category;

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/bidder")
 public class BidderResource{
-    private  final BidderService bidderService;
-    private  final UserService userService;
+    private final BidderService bidderService;
+    private final UserService userService;
 
     public BidderResource(BidderService bidderService, UserService userService){
         this.bidderService = bidderService;
@@ -48,7 +48,7 @@ public class BidderResource{
     }
 
     @GetMapping("/find/{username}")
-    public ResponseEntity<Bidder> getUserByUsername (@PathVariable("username") String username) {
+    public ResponseEntity<Bidder> getBidderByUsername (@PathVariable("username") String username) {
         User user = userService.findUserByUsername(username);
         Bidder bidder = user.getBidder();
         return new ResponseEntity<>(bidder, HttpStatus.OK);

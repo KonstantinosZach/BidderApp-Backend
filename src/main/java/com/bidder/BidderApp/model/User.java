@@ -50,6 +50,15 @@ public class User implements Serializable {
     @JsonIgnore
     private Bidder bidder = null;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "seller_id")
+    @JsonIgnore
+    private Seller seller = null;
+
+    public Seller getSeller() {return seller;}
+
+    public void setSeller(Seller seller) {this.seller = seller;}
+
     public Bidder getBidder() { return bidder; }
 
     public void setBidder(Bidder bidder) {
