@@ -16,7 +16,7 @@ public class Bidder implements Serializable {
     private int id;
 
     @Column(nullable = false)
-    private Integer rating;
+    private Integer rating = 0;
 
     @Column
     private String country;

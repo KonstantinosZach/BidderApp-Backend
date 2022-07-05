@@ -19,9 +19,9 @@ public class SellerResource {
     }
 
     @PostMapping("/add/{username}")
-    public ResponseEntity<Seller> addSeller(@PathVariable("username") String username, @RequestBody Seller seller){
+    public ResponseEntity<Seller> addSeller(@PathVariable("username") String username){
         User user = userService.findUserByUsername(username);
-
+        Seller seller = new Seller();
         if(user.getSeller() != null)
             throw new SellerFoundException("User:" + user.getUsername() + " is already a bidder");
         else {

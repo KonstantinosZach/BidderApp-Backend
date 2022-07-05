@@ -13,7 +13,7 @@ public class Seller {
     private int id;
 
     @Column(nullable = false)
-    private Integer rating;
+    private Integer rating = 0;
 
     @OneToMany(mappedBy = "seller")
     private Set<Item> items;
