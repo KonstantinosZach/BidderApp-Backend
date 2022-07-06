@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -51,5 +52,17 @@ public class ItemResource {
     @GetMapping("/find/")
     public List<Item> getAllItems(){
         return itemService.findAllItems();
+    }
+
+    @GetMapping("/find/{username}")
+    public List<Item> getSellerItems(@PathVariable("username") String username){
+        List<Item> list = itemService.findAllItems();
+        List<Item> sellerList = new ArrayList<>();
+
+        for(Item item : list)
+            if(item.getSeller().getUser().getUsername().equals(username))
+                sellerList.add(item);
+
+        return sellerList;
     }
 }

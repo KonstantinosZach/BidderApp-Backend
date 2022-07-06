@@ -30,7 +30,7 @@ public class Item implements Serializable {
     private Float firstBid;  //first price
 
     @Column(nullable = false)
-    private Integer numberOfBids;
+    private Integer numberOfBids = 0;
 
     @OneToMany(mappedBy = "item")
     private Set<Bid> bids;
@@ -41,11 +41,11 @@ public class Item implements Serializable {
     @Column(nullable = false)
     private String country;
 
-    @Column(nullable = false, length = 50)
-    private String started;
+    @Column(length = 50)
+    private String started = "";
 
-    @Column(nullable = false, length = 50)
-    private String ends;
+    @Column(length = 50)
+    private String ends = "";
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
