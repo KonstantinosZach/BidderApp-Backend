@@ -2,6 +2,7 @@ package com.bidder.BidderApp.Service;
 
 import com.bidder.BidderApp.model.Item;
 import com.bidder.BidderApp.model.Seller;
+import com.bidder.BidderApp.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,4 +66,33 @@ public class ItemResource {
 
         return sellerList;
     }
+
+    @GetMapping("/find-id/{id}")
+    public Item getItemById(@PathVariable("id") Integer id){
+        return itemService.findItemById(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Item> updateItem(@PathVariable("id") Integer id, @RequestBody Item item){
+        Item toBeUpdated = itemService.findItemById(id);
+
+        toBeUpdated.setName(item.getName());
+        toBeUpdated.setBuyPrice(item.getBuyPrice());
+        toBeUpdated.setCategory(item.getCategory());
+        toBeUpdated.setCountry(item.getCountry());
+        toBeUpdated.setDescription(item.getDescription());
+        toBeUpdated.setFirstBid(item.getFirstBid());
+        toBeUpdated.setCurrently(item.getFirstBid());
+        toBeUpdated.setLocation(item.getLocation());
+
+        if(item.getEnds() != "")
+            toBeUpdated.setEnds(item.getEnds());
+
+        if(item.getStarted() != "")
+            toBeUpdated.setStarted(item.getStarted());
+
+        Item updatedItem = itemService.updateItem(toBeUpdated);
+        return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+    }
+
 }
