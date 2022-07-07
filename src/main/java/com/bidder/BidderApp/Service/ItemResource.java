@@ -55,7 +55,7 @@ public class ItemResource {
         return itemService.findAllItems();
     }
 
-    @GetMapping("/find/{username}")
+    @GetMapping("/find-seller-items/{username}")
     public List<Item> getSellerItems(@PathVariable("username") String username){
         List<Item> list = itemService.findAllItems();
         List<Item> sellerList = new ArrayList<>();
@@ -67,11 +67,22 @@ public class ItemResource {
         return sellerList;
     }
 
+    @GetMapping("/find-bidder-items/{username}")
+    public List<Item> getBidderItems(@PathVariable("username") String username){
+        List<Item> list = itemService.findAllItems();
+        List<Item> bidderList = new ArrayList<>();
+
+        for(Item item : list)
+            if(!item.getSeller().getUser().getUsername().equals(username))
+                bidderList.add(item);
+
+        return bidderList;
+    }
+    
     @GetMapping("/find-id/{id}")
     public Item getItemById(@PathVariable("id") Integer id){
         return itemService.findItemById(id);
     }
-
     @PutMapping("/update/{id}")
     public ResponseEntity<Item> updateItem(@PathVariable("id") Integer id, @RequestBody Item item){
         Item toBeUpdated = itemService.findItemById(id);
