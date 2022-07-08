@@ -2,10 +2,13 @@ package com.bidder.BidderApp.Service;
 import com.bidder.BidderApp.model.Bid;
 import com.bidder.BidderApp.model.Bidder;
 import com.bidder.BidderApp.model.Item;
+import com.bidder.BidderApp.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -38,7 +41,7 @@ public class BidResource {
         bidder.setBids(bids);
         bidderService.updateBidder(bidder);
 
-        Set<Bid> itemBids = item.getBids();
+        List<Bid> itemBids = item.getBids();
         itemBids.add(newBid);
         item.setNumberOfBids(item.getNumberOfBids() + 1);
         itemService.updateItem(item);
@@ -50,6 +53,19 @@ public class BidResource {
     public Set<Bid> getAllBids (@PathVariable("username") String username) {
         Bidder bidder = userService.findUserByUsername(username).getBidder();
         return bidder.getBids();
+    }
+
+    @GetMapping("/find/item-bids/{id}")
+    public List<Bid> getAllItemBids (@PathVariable("id") Integer id) {
+        Item item = itemService.findItemById(id);
+        Collections.reverse(item.getBids());
+        return item.getBids();
+    }
+
+    @GetMapping("/find-user/{id}")
+    public User getUserByBidId (@PathVariable("id") Integer id) {
+        Bid bid = bidService.findBidById(id);
+        return bid.getBidder().getUser();
     }
 
 //    @DeleteMapping("/delete/{id}")

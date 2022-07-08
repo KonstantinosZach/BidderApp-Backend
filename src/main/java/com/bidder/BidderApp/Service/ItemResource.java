@@ -106,4 +106,16 @@ public class ItemResource {
         return new ResponseEntity<>(updatedItem, HttpStatus.OK);
     }
 
+    @PutMapping("/update/selling-item/{id}")
+    public ResponseEntity<Item> updateSellingItem(@PathVariable("id") Integer id, @RequestBody Item item){
+        Item toBeUpdated = itemService.findItemById(id);
+
+        toBeUpdated.setCurrently(item.getCurrently());
+        toBeUpdated.setNumberOfBids(item.getNumberOfBids());
+        toBeUpdated.setEnds(item.getEnds());
+        
+        Item updatedItem = itemService.updateItem(toBeUpdated);
+        return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+    }
+
 }

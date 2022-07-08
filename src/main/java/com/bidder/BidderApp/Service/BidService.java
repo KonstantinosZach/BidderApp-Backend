@@ -29,4 +29,5 @@ public class BidService {
         bidRepo.deleteById(id);
     }
 
+    public Bid findBidById(Integer id){return  bidRepo.getById(id); }
 }

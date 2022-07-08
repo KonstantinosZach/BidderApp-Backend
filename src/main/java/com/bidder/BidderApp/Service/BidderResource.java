@@ -53,6 +53,4 @@ public class BidderResource{
         Bidder bidder = user.getBidder();
         return new ResponseEntity<>(bidder, HttpStatus.OK);
     }
-
-
 }

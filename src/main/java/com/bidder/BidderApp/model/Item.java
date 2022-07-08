@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,7 +34,7 @@ public class Item implements Serializable {
     private Integer numberOfBids = 0;
 
     @OneToMany(mappedBy = "item")
-    private Set<Bid> bids;
+    private List<Bid> bids;
 
     @Column(nullable = false)
     private String location;
@@ -101,9 +102,9 @@ public class Item implements Serializable {
         this.numberOfBids = numberOfBids;
     }
 
-    public Set<Bid> getBids() { return bids; }
+    public List<Bid> getBids() { return bids; }
 
-    public void setBids(Set<Bid> bids) { this.bids = bids; }
+    public void setBids(List<Bid> bids) { this.bids = bids; }
 
     public String getLocation() {
         return location;
