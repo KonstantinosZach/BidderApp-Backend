@@ -39,6 +39,12 @@ public class Item implements Serializable {
     @Column(nullable = false)
     private String location;
 
+    @Column
+    private String latitude;
+
+    @Column
+    private String longitude;
+
     @Column(nullable = false)
     private String country;
 
@@ -113,6 +119,14 @@ public class Item implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public String getLatitude() {return latitude;}
+
+    public void setLatitude(String latitude) {this.latitude = latitude;}
+
+    public String getLongitude() {return longitude;}
+
+    public void setLongitude(String longitude) {this.longitude = longitude;}
 
     public String getCountry() {
         return country;
