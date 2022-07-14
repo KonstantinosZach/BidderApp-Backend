@@ -43,7 +43,6 @@ public class BidResource {
 
         List<Bid> itemBids = item.getBids();
         itemBids.add(newBid);
-        item.setNumberOfBids(item.getNumberOfBids() + 1);
         itemService.updateItem(item);
 
         return new ResponseEntity<>(newBid, HttpStatus.CREATED);
