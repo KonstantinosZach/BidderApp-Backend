@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @JsonSerialize
@@ -54,6 +56,20 @@ public class User implements Serializable {
     @JoinColumn(name = "seller_id")
     @JsonIgnore
     private Seller seller = null;
+
+    @OneToMany(mappedBy = "sender")
+    private List<UserMessages> sent;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<UserMessages> received;
+
+    public List<UserMessages> getSent() {return sent;}
+
+    public void setSent(List<UserMessages> sent) {this.sent = sent;}
+
+    public List<UserMessages> getReceived() {return received;}
+
+    public void setReceived(List<UserMessages> received) {this.received = received;}
 
     public Seller getSeller() {return seller;}
 
