@@ -67,6 +67,12 @@ public class ItemResource {
         return sellerList;
     }
 
+    @GetMapping("/find-seller-from-item/{id}")
+    public User getSellerFromItemId(@PathVariable("id") Integer id){
+        Item item = itemService.findItemById(id);
+        return item.getSeller().getUser();
+    }
+
     @GetMapping("/find-bidder-items/{username}")
     public List<Item> getBidderItems(@PathVariable("username") String username){
         List<Item> list = itemService.findAllItems();

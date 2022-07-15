@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -84,7 +85,26 @@ public class MessageResource {
             if(!mess.getDeletedByReceiver())
                 onlineMessages.add(mess);
         }
+        Collections.reverse(onlineMessages);
         return onlineMessages;
+    }
+
+    @GetMapping("/find-sender/{id}")
+    public User getSenderByMessageId(@PathVariable("id") Integer id){
+        return messageService.findMessage(id).getSender();
+    }
+
+    @GetMapping("/find-message/{id}")
+    public UserMessages getMessageById(@PathVariable("id") Integer id){
+        return messageService.findMessage(id);
+    }
+
+    @PutMapping("/read-message/{id}")
+    public ResponseEntity<?> messageIsRead(@PathVariable("id") Integer id){
+        UserMessages message = messageService.findMessage(id);
+        message.setRead(true);
+        messageService.updateMessage(message);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/find-sent/{username}")
@@ -95,6 +115,7 @@ public class MessageResource {
             if(!mess.getDeletedBySender())
                 onlineMessages.add(mess);
         }
+        Collections.reverse(onlineMessages);
         return onlineMessages;
     }
 }
