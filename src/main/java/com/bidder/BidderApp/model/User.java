@@ -45,8 +45,6 @@ public class User implements Serializable {
     @Column(nullable = false)
     private Boolean accepted = false;
 
-    private String imageUrl;
-
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "bidder_id")
     @JsonIgnore
@@ -117,10 +115,6 @@ public class User implements Serializable {
         this.afm = afm;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public void setAdmin(Boolean status) {
         this.admin = status;
     }
@@ -163,10 +157,6 @@ public class User implements Serializable {
 
     public String getAfm() {
         return afm;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
     }
 
     public Boolean getAdmin() {

@@ -5,10 +5,18 @@ import com.bidder.BidderApp.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 public class ItemService {
+
+    static class itemSort implements Comparator<Item> {
+        public int compare(Item a, Item b) {
+            return a.getId() - b.getId();
+        }
+    }
+
     private  final ItemRepo itemRepo;
 
     @Autowired
@@ -17,7 +25,9 @@ public class ItemService {
     public Item addItem(Item item){ return itemRepo.save(item); }
 
     public List<Item> findAllItems(){
-        return itemRepo.findAll();
+        List<Item> sorted = itemRepo.findAll();
+        sorted.sort(new itemSort());
+        return sorted;
     }
 
     public Item findItemById(Integer id){

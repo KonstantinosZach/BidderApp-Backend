@@ -94,6 +94,11 @@ public class MessageResource {
         return messageService.findMessage(id).getSender();
     }
 
+    @GetMapping("/find-receiver/{id}")
+    public User getReceiverByMessageId(@PathVariable("id") Integer id){
+        return messageService.findMessage(id).getReceiver();
+    }
+
     @GetMapping("/find-message/{id}")
     public UserMessages getMessageById(@PathVariable("id") Integer id){
         return messageService.findMessage(id);
