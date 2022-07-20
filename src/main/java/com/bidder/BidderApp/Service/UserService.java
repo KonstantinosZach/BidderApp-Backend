@@ -5,10 +5,10 @@ import com.bidder.BidderApp.Exception.UserNotFoundException;
 import com.bidder.BidderApp.Repo.UserRepo;
 import com.bidder.BidderApp.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -25,6 +25,8 @@ public class UserService {
         if(userExists)
             throw new UserAlreadyExists("User with username:" + user.getUsername() + "already exists");
 
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
     

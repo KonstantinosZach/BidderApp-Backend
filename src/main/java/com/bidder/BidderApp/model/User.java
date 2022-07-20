@@ -2,20 +2,22 @@ package com.bidder.BidderApp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @JsonSerialize
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
     @Id
     @Column(nullable = false, unique = true, length = 30)
     private String username; //the assignment must take place before a new entity is passed to EntityManager
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 64)
     private String password;
 
     @Column(nullable = false, length = 30)
@@ -60,6 +62,21 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "receiver")
     private List<UserMessages> received;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {return null;}
+
+    @Override
+    public boolean isAccountNonExpired() {return true;}
+
+    @Override
+    public boolean isAccountNonLocked() {return true;}
+
+    @Override
+    public boolean isCredentialsNonExpired() {return true;}
+
+    @Override
+    public boolean isEnabled() {return true;}
 
     public List<UserMessages> getSent() {return sent;}
 
