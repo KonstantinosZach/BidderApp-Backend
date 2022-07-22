@@ -55,7 +55,6 @@ public class UserResource {
         toBeUpdated.setEmail(user.getEmail());
         toBeUpdated.setPhone(user.getPhone());
         toBeUpdated.setAfm(user.getAfm());
-        toBeUpdated.setPassword(user.getPassword());
         toBeUpdated.setPostNumber(user.getPostNumber());
         toBeUpdated.setAccepted(user.getAccepted());
 

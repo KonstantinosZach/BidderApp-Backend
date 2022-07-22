@@ -1,7 +1,9 @@
 package com.bidder.BidderApp.Security;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bidder.BidderApp.model.User;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -60,8 +64,18 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private void setAuthenticationContext(String token, HttpServletRequest request) {
         UserDetails userDetails = getUserDetails(token);
 
+        Claims claims = jwtUtil.parseClaims(token);
+        String roles = (String) claims.get("roles");
+        roles = roles.replace("[", "").replace("]", "");
+        String[] roleNames = roles.split(",");
+
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (String RoleName : roleNames) {
+            authorities.add(new SimpleGrantedAuthority(RoleName));
+        }
+
         UsernamePasswordAuthenticationToken
-                authentication = new UsernamePasswordAuthenticationToken(userDetails, null, null);
+                authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
 
         authentication.setDetails(
                 new WebAuthenticationDetailsSource().buildDetails(request));
@@ -71,12 +85,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private UserDetails getUserDetails(String token) {
         User userDetails = new User();
-        String[] jwtSubject = jwtUtil.getSubject(token).split(",");
+        Claims claims = jwtUtil.parseClaims(token);
+        String subject = (String) claims.get(Claims.SUBJECT);
 
-        System.out.println(Arrays.toString(jwtSubject));
-
+        String[] jwtSubject = subject.split(",");
         userDetails.setUsername(jwtSubject[0]);
-        userDetails.setEmail(jwtSubject[1]);
+        userDetails.setPassword(jwtSubject[1]);
 
         return userDetails;
     }
